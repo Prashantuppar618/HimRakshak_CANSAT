@@ -1,4 +1,3 @@
-// Graph.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Line } from "react-chartjs-2";
@@ -34,6 +33,15 @@ const Graph = ({ field, label, color }) => {
             setDataPoints(response.data);
         } catch (error) {
             console.error("Error fetching graph data", error);
+        }
+    };
+
+    const handleReset = async () => {
+        try {
+            await axios.delete(`http://localhost:5000/api/sensor/${field}/reset`);
+            setDataPoints([]);
+        } catch (error) {
+            console.error("Error resetting graph data", error);
         }
     };
 
@@ -74,6 +82,9 @@ const Graph = ({ field, label, color }) => {
     return (
         <div className="card graph-card">
             <Line data={chartData} options={options} />
+            <div className="reset-button-container">
+                <button onClick={handleReset}>Reset Graph Data</button>
+            </div>
         </div>
     );
 };

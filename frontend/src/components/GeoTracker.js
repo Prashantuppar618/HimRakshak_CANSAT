@@ -1,6 +1,7 @@
+// ✅ GeoTracker.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -14,31 +15,50 @@ L.Icon.Default.mergeOptions({
 
 const GeoTracker = () => {
     const [location, setLocation] = useState(null);
+    const [path, setPath] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const API_KEY = "KR945FXY0HA1AR0G";
     const CHANNEL_ID = "2946951";
     const THINGSPEAK_API = `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds/last.json?api_key=${API_KEY}`;
 
-
     const fetchLocation = async () => {
         try {
             const response = await axios.get(THINGSPEAK_API);
             const data = response.data;
-            setLocation({
-                latitude: parseFloat(data.field7) || 0,
-                longitude: parseFloat(data.field8) || 0,
-            });
+            const lat = parseFloat(data.field7);
+            const lng = parseFloat(data.field8);
+            const timestamp = data.created_at;
+
+            if (!isNaN(lat) && !isNaN(lng)) {
+                const newLocation = { latitude: lat, longitude: lng };
+                setLocation(newLocation);
+                setPath(prev => [...prev, [lat, lng]]);
+
+                // Save to MongoDB
+                await axios.post("http://localhost:5000/api/sensor/add", {
+                    type: "gps",
+                    field: "location",
+                    value: 0, // Placeholder; you may remove this
+                    lat,
+                    lng,
+                    timestamp
+                });
+            }
         } catch (error) {
-            console.error("Error fetching location data:", error);
+            console.error("Error fetching or saving location data:", error);
         } finally {
             setLoading(false);
         }
     };
 
+    const clearPath = () => {
+        setPath([]);
+    };
+
     useEffect(() => {
         fetchLocation();
-        const interval = setInterval(fetchLocation, 10000);
+        const interval = setInterval(fetchLocation, 10000); // Fetch every 10 seconds
         return () => clearInterval(interval);
     }, []);
 
@@ -54,8 +74,11 @@ const GeoTracker = () => {
                         <p>📌 Longitude: {location.longitude}</p>
                     </div>
 
-                    {/* Map View */}
-                    <div style={{ height: "300px", marginTop: "1rem", borderRadius: "8px", overflow: "hidden" }}>
+                    <button onClick={clearPath} style={{ marginBottom: "10px" }}>
+                        🗑️ Clear Path
+                    </button>
+
+                    <div className="map-container">
                         <MapContainer
                             center={[location.latitude, location.longitude]}
                             zoom={15}
@@ -67,8 +90,9 @@ const GeoTracker = () => {
                                 attribution="&copy; OpenStreetMap contributors"
                             />
                             <Marker position={[location.latitude, location.longitude]}>
-                                <Popup>Soldier’s Last Known Position</Popup>
+                                <Popup>🧭 Last Known Position</Popup>
                             </Marker>
+                            <Polyline positions={path} color="blue" />
                         </MapContainer>
                     </div>
                 </>
