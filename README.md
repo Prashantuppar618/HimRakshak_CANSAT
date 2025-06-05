@@ -1,152 +1,154 @@
-Here's a polished and well-structured `README.md` content tailored for your HimRakshak project:
 
 ---
 
 ```markdown
-# 🛡️ HimRakshak - Real-Time Disaster Monitoring System
+# 🛰️ HimRakshak – Border Surveillance CanSAT System
 
-HimRakshak is a real-time disaster detection and monitoring system built with React.js, Node.js, MongoDB, and Express. It simulates and visualizes sensor data such as **movement (acceleration, gyroscope)** and **weather (temperature, humidity, pressure, altitude)** to detect early signs of **landslides, structural collapses, or extreme weather** conditions.
-
----
-
-## 🚀 Features
-
-- 🔴 **Real-time simulation** of sensor data (Accel, Gyro, Pressure, etc.)
-- 📊 **Live graphs** to visualize historical sensor trends
-- ⚠️ **Instant alerts** on abnormal conditions (e.g., high movement, low pressure)
-- 💾 **MongoDB integration** for logging and analytics
-- 🌐 Backend built using **Node.js & Express**
-- ⚛️ Frontend using **React.js**
-- 📡 Easy extension for real sensor integration (e.g., IoT devices)
+**Project HimRakshak** is a rugged, modular, and autonomous monitoring system designed for the **Indian Border Security Forces**, deployed via a CanSAT (Can-sized Satellite) prototype. It continuously monitors environmental conditions, tracks location, detects motion anomalies, and displays real-time sensor data on a full-stack web application.
 
 ---
 
-## 🖥️ Tech Stack
+## 🔧 System Overview
 
-| Frontend     | Backend     | Database    |
-|--------------|-------------|-------------|
-| React.js     | Node.js     | MongoDB     |
-| Chart.js     | Express.js  | Mongoose    |
-| Axios        |             |             |
-
----
-
-## 📁 Folder Structure
-
-```
-
-himrakshak/
-├── backend/
-│   ├── models/
-│   ├── routes/
-│   ├── server.js
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── MovementAlert.js
-│   │   │   ├── WeatherMonitor.js
-│   │   │   ├── Graph.js
-│   │   ├── styles/
-│   │   │   └── himrakshak.css
-│   │   ├── App.js
-│   │   └── index.js
-├── README.md
-└── package.json
-
-````
+- **Frontend**: ReactJS (Real-time graphs, alert UI, tracking interface)
+- **Backend**: Node.js + Express + MongoDB Atlas (stores & serves sensor data)
+- **Communication**: ESP32 microcontroller → ThingSpeak API → Server DB
+- **Database**: MongoDB Atlas with Mongoose ORM
 
 ---
 
-## ⚙️ Setup Instructions
+## 🧠 CanSAT Hardware Architecture
 
-### 1. Clone the repository
+**Sensors Used:**
+- 🌡️ DHT22 – Temperature & Humidity
+- ⛰️ BMP280 – Pressure & Altitude
+- 🌀 MPU6050 – Acceleration & Gyroscope
+- 📍 NEO-6M GPS – Latitude/Longitude Tracking
+
+**Embedded Code (ESP32 in C++):**
+- Collects sensor data every second
+- Sends readings to ThingSpeak every 20 seconds
+- Handles connection retries and GPS decoding
+
+> ✅ Refer to `sendToThingSpeak()` in the ESP32 code for data payload formatting.
+
+---
+
+## 🌐 Features
+
+### ✅ Real-time Dashboard (ReactJS)
+- Environmental readings: temperature, humidity, pressure, altitude
+- Movement alerts with anomaly detection (e.g., landslides)
+- Soldier GPS tracking on OpenStreetMap
+- Auto-refreshing graphs for all metrics
+
+### 🧠 Smart Alerts
+- Movement spikes over thresholds trigger warnings
+- Sudden pressure drops = avalanche or altitude hazard
+
+### 🗃️ Graphing and Storage
+- Sensor data stored in MongoDB Atlas
+- Charts updated every 10 seconds
+- Reset individual sensor graphs
+- Generate PDF report with all graphs (One-click export)
+
+---
+
+## 📦 Setup Instructions
+
+### 🔌 1. Clone & Install
 
 ```bash
-git clone https://github.com/yourusername/himrakshak.git
+git clone https://github.com/your-username/himrakshak.git
 cd himrakshak
+npm install
+cd frontend
+npm install
 ````
 
-### 2. Backend Setup
+### 🛠️ 2. Environment Setup
+
+Create `.env` in `/backend`:
+
+```env
+MONGO_URI=your_mongo_connection_string
+```
+
+### 🚀 3. Start Development
 
 ```bash
+# Backend
 cd backend
-npm install
+node server.js
+
+# Frontend
+cd frontend
 npm start
 ```
 
-* Runs the server at `http://localhost:5000`
+---
 
-### 3. Frontend Setup
+## 🛰️ Deployment Flow
 
-```bash
-cd ../frontend
-npm install
-npm start
-```
-
-* Runs the React app at `http://localhost:3000`
+1. **Sensor Integration** (ESP32 C++) — Reads sensors and transmits to ThingSpeak
+2. **Backend Collection** — Node.js server polls ThingSpeak and stores in MongoDB
+3. **Frontend Dashboard** — React renders real-time data + maps + alerts
 
 ---
 
-## 📡 API Endpoints
+## 🧪 Simulations & Testing
 
-### POST `/api/sensor/add`
-
-Saves sensor data to MongoDB.
-
-**Request Body:**
-
-```json
-{
-  "type": "movement" | "weather",
-  "field": "accelX" | "gyroX" | "temperature" | "pressure" | "humidity" | "altitude",
-  "value": Number
-}
-```
+* ESP32 simulation mode increases altitude/pressure every second
+* MPU6050 simulates varying acceleration and gyroscope values
+* GeoTracker displays a static location but logs real-time tracks if live GPS data is received
 
 ---
 
-## 📸 Screenshots
+## 📊 PDF Report Generation
 
-| Movement Alert UI                       | Weather Monitoring UI                 |
-| --------------------------------------- | ------------------------------------- |
-| ![Movement](./screenshots/movement.png) | ![Weather](./screenshots/weather.png) |
-
----
-
-## 🌍 Future Enhancements
-
-* 🔌 Real-time sensor data via WebSockets or MQTT
-* 📈 Data analytics dashboard with trends and forecasts
-* 📱 Mobile-friendly PWA version
-* 🔔 SMS/Email alert system integration
+* Generates visual reports of graphs only
+* Exported as `.pdf` from the dashboard
+* Useful for mission logs and archival
 
 ---
 
-## 🙌 Contributing
+## 🌄 Mission Goals (as per [CanSAT PDR](./docs/CANSAT_Design_documentation_SkyLinkers.docx))
 
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change or add.
-
----
-
-## 📝 License
-
-This project is licensed under the [MIT License](LICENSE).
+* ❄️ Survive -20°C to 50°C environments
+* 📡 Transmit live data in harsh terrain
+* 💥 Cushion descent via balloon casing
+* 📍 Track location post-deployment
+* 📉 Detect landslides and collapses in real-time
 
 ---
 
-## 👨‍💻 Developed by
+## 🛡️ Ethical & Environmental Impact
 
-**Prashanth Uppar**
-Department of CSE
-KLE Tech, MSSCET, Belagavi
+* No offensive functionality
+* Made with lightweight and biodegradable materials
+* Designed for rescue, border patrol, and civilian safety
 
-> Safeguarding lives through technology — HimRakshak!
+---
+
+## 🧑‍💻 Team SkyLinkers
+
+A group of passionate engineers building smart tech for secure borders.
+
+---
+
+## 📃 License
+
+MIT License – Free to use with attribution.
+
+---
+
+### 🧠 Acknowledgment
+
+Thanks to [ThingSpeak](https://thingspeak.com), [Leaflet.js](https://leafletjs.com), [Chart.js](https://www.chartjs.org), and [ESP32 community](https://docs.espressif.com) for their incredible tools and support.
 
 ```
 
 ---
 
-Let me know if you want me to tailor it further with your GitHub repo link, screenshots, or deployment instructions.
+Let me know if you want a version with markdown images/diagrams, or want the README translated to Hindi for local audiences.
 ```
