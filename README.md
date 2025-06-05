@@ -1,7 +1,8 @@
+Sure! Below is your **cleaned-up, properly formatted `README.md` file** for the **HimRakshak – Border Surveillance CanSAT System** project:
 
 ---
 
-```markdown
+````markdown
 # 🛰️ HimRakshak – Border Surveillance CanSAT System
 
 **Project HimRakshak** is a rugged, modular, and autonomous monitoring system designed for the **Indian Border Security Forces**, deployed via a CanSAT (Can-sized Satellite) prototype. It continuously monitors environmental conditions, tracks location, detects motion anomalies, and displays real-time sensor data on a full-stack web application.
@@ -20,15 +21,17 @@
 ## 🧠 CanSAT Hardware Architecture
 
 **Sensors Used:**
-- 🌡️ DHT22 – Temperature & Humidity
-- ⛰️ BMP280 – Pressure & Altitude
-- 🌀 MPU6050 – Acceleration & Gyroscope
-- 📍 NEO-6M GPS – Latitude/Longitude Tracking
+
+- 🌡️ **DHT22** – Temperature & Humidity  
+- ⛰️ **BMP280** – Pressure & Altitude  
+- 🌀 **MPU6050** – Acceleration & Gyroscope  
+- 📍 **NEO-6M GPS** – Latitude/Longitude Tracking  
 
 **Embedded Code (ESP32 in C++):**
-- Collects sensor data every second
-- Sends readings to ThingSpeak every 20 seconds
-- Handles connection retries and GPS decoding
+
+- Collects sensor data every second  
+- Sends readings to ThingSpeak every 20 seconds  
+- Handles connection retries and GPS decoding  
 
 > ✅ Refer to `sendToThingSpeak()` in the ESP32 code for data payload formatting.
 
@@ -37,20 +40,23 @@
 ## 🌐 Features
 
 ### ✅ Real-time Dashboard (ReactJS)
-- Environmental readings: temperature, humidity, pressure, altitude
-- Movement alerts with anomaly detection (e.g., landslides)
-- Soldier GPS tracking on OpenStreetMap
-- Auto-refreshing graphs for all metrics
+
+- Environmental readings: temperature, humidity, pressure, altitude  
+- Movement alerts with anomaly detection (e.g., landslides)  
+- Soldier GPS tracking on OpenStreetMap  
+- Auto-refreshing graphs for all metrics  
 
 ### 🧠 Smart Alerts
-- Movement spikes over thresholds trigger warnings
-- Sudden pressure drops = avalanche or altitude hazard
+
+- Movement spikes over thresholds trigger warnings  
+- Sudden pressure drops = avalanche or altitude hazard  
 
 ### 🗃️ Graphing and Storage
-- Sensor data stored in MongoDB Atlas
-- Charts updated every 10 seconds
-- Reset individual sensor graphs
-- Generate PDF report with all graphs (One-click export)
+
+- Sensor data stored in MongoDB Atlas  
+- Charts updated every 10 seconds  
+- Reset individual sensor graphs  
+- Generate PDF report with all graphs (One-click export)  
 
 ---
 
@@ -68,7 +74,7 @@ npm install
 
 ### 🛠️ 2. Environment Setup
 
-Create `.env` in `/backend`:
+Create `.env` file inside `/backend` directory:
 
 ```env
 MONGO_URI=your_mongo_connection_string
@@ -77,11 +83,11 @@ MONGO_URI=your_mongo_connection_string
 ### 🚀 3. Start Development
 
 ```bash
-# Backend
+# Start Backend
 cd backend
 node server.js
 
-# Frontend
+# Start Frontend
 cd frontend
 npm start
 ```
@@ -112,7 +118,9 @@ npm start
 
 ---
 
-## 🌄 Mission Goals (as per [CanSAT PDR](./docs/CANSAT_Design_documentation_SkyLinkers.docx))
+## 🌄 Mission Goals
+
+*(as per [CanSAT PDR](./docs/CANSAT_Design_documentation_SkyLinkers.docx))*
 
 * ❄️ Survive -20°C to 50°C environments
 * 📡 Transmit live data in harsh terrain
@@ -130,7 +138,7 @@ npm start
 
 ---
 
-## 🧑‍💻 Team SkyLinkers
+## 👨‍💻 Team SkyLinkers
 
 A group of passionate engineers building smart tech for secure borders.
 
@@ -142,13 +150,14 @@ MIT License – Free to use with attribution.
 
 ---
 
-### 🧠 Acknowledgment
+### 🙏 Acknowledgment
 
-Thanks to [ThingSpeak](https://thingspeak.com), [Leaflet.js](https://leafletjs.com), [Chart.js](https://www.chartjs.org), and [ESP32 community](https://docs.espressif.com) for their incredible tools and support.
+Thanks to:
+
+* [ThingSpeak](https://thingspeak.com)
+* [Leaflet.js](https://leafletjs.com)
+* [Chart.js](https://www.chartjs.org)
+* [ESP32 Documentation](https://docs.espressif.com)
 
 ```
 
----
-
-Let me know if you want a version with markdown images/diagrams, or want the README translated to Hindi for local audiences.
-```
