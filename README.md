@@ -1,8 +1,4 @@
-Sure! Below is your **cleaned-up, properly formatted `README.md` file** for the **HimRakshak – Border Surveillance CanSAT System** project:
 
----
-
-````markdown
 # 🛰️ HimRakshak – Border Surveillance CanSAT System
 
 **Project HimRakshak** is a rugged, modular, and autonomous monitoring system designed for the **Indian Border Security Forces**, deployed via a CanSAT (Can-sized Satellite) prototype. It continuously monitors environmental conditions, tracks location, detects motion anomalies, and displays real-time sensor data on a full-stack web application.
@@ -159,5 +155,5 @@ Thanks to:
 * [Chart.js](https://www.chartjs.org)
 * [ESP32 Documentation](https://docs.espressif.com)
 
-```
+
 
